@@ -39,8 +39,8 @@ NGSpeciesID \
         --consensus \
         --racon \
         --racon_iter 3 \
-        --m 750 \
-        --s 250 \
+        --m 750 `#target length`\
+        --s 250 `#filter for target length =/250 bp`\
         --fastq $reads \
         --outfolder $outfolder
 
