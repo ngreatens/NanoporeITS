@@ -60,6 +60,57 @@ for file in *.fastq; do echo "./NGSpeciesID.sh $file"; done >  NGS.commands
 
 copy output into slurm script or pass. It runs very fast on a cluster. Probably doesn't take much time on a laptop either.
 
+Result should be something similar to this for one sample
+```
+10028
+├── 1
+│   ├── cluster_origins.csv
+│   └── pre_clusters.csv
+├── 2
+│   ├── cluster_origins.csv
+│   └── pre_clusters.csv
+├── 3
+│   ├── cluster_origins.csv
+│   └── pre_clusters.csv
+├── consensus_reference_12.fasta
+├── consensus_reference_23.fasta
+├── final_cluster_origins.tsv
+├── final_clusters.tsv
+├── logfile.txt
+├── racon_cl_id_12
+│   ├── consensus.fasta
+│   ├── mm2_stderr_it_0.txt
+│   ├── mm2_stderr_it_1.txt
+│   ├── mm2_stderr_it_2.txt
+│   ├── racon_polished_it_0.fasta
+│   ├── racon_polished_it_1.fasta
+│   ├── racon_polished_it_2.fasta
+│   ├── racon_stderr_it_0.txt
+│   ├── racon_stderr_it_1.txt
+│   ├── racon_stderr_it_2.txt
+│   ├── read_alignments_it_0.paf
+│   ├── read_alignments_it_1.paf
+│   ├── read_alignments_it_2.paf
+│   └── stdout.txt
+├── racon_cl_id_23
+│   ├── consensus.fasta
+│   ├── mm2_stderr_it_0.txt
+│   ├── mm2_stderr_it_1.txt
+│   ├── mm2_stderr_it_2.txt
+│   ├── racon_polished_it_0.fasta
+│   ├── racon_polished_it_1.fasta
+│   ├── racon_polished_it_2.fasta
+│   ├── racon_stderr_it_0.txt
+│   ├── racon_stderr_it_1.txt
+│   ├── racon_stderr_it_2.txt
+│   ├── read_alignments_it_0.paf
+│   ├── read_alignments_it_1.paf
+│   ├── read_alignments_it_2.paf
+│   └── stdout.txt
+├── reads_to_consensus_12.fastq
+├── reads_to_consensus_23.fastq
+└── sorted.fastq
+```
 
 
 
