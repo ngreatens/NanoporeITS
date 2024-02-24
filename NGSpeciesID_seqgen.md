@@ -47,9 +47,17 @@ NGSpeciesID \
 conda deactivate
 ```
 
-Example usage:
+Example usage (with above shell script in folder with fastqs):
 
 ```
 ./NGSpeciesID.sh sample_10062.fastq
 ```
+
+To get commands for all fastqs:
+```
+for file in *.fastq; do echo "./NGSpeciesID.sh $file"; done >  NGS.commands
+```
+
+copy output into slurm script or pass. It runs very fast on a cluster. Probably doesn't take much time on a laptop either.
+
 
