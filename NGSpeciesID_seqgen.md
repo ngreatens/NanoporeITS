@@ -58,7 +58,7 @@ To get commands for all fastqs:
 for file in *.fastq; do echo "./NGSpeciesID.sh $file"; done >  NGS.commands
 ```
 
-copy output into slurm script or pass. It runs very fast on a cluster. Probably doesn't take much time on a laptop either.
+copy output into slurm submission script. It runs very fast on a cluster. Probably doesn't take much time on a laptop either.
 
 Result should be something similar to this for one sample.
 
