@@ -301,7 +301,7 @@ rm tophits.files
 
 # Summary
 
-In short, all scripts will be run in the same directory. Copy all scripts from the scripts folder in this repository to the directory where you will run everything (or adjust paths to the scripts as needed).
+In short, all scripts will be run in the same directory. Copy all scripts from the scripts folder in this repository to the directory where you will run everything. (or put the scripts folder in your path and adjust paths to the scripts as needed).
 
 Once you get everything working, you should be able to chain everything together and just have it run overnight with something similar to below
 
@@ -311,13 +311,21 @@ For example
 ```
 #!/bin/bash
 
+
+coverage_minimum=$1
+forward_primer=$2
+reverse_primer=$3
+
+######CHANGE PATH#########
+export PATH=$PATH:path/to/NanoporeITS/scripts
+
 module load parallel
 
 ## run NGSpeciesID
-./NGSpeciesID.sh
+NGSpeciesID.sh
 
 ## run post processing script to trim primers, summarize data, and move everything to bins
-./NGSpeciesID_postprocessing.sh 20 TGAACCTGCAGAAGGATCATTA GCCTTAGATGGAATTTACCACCC
+NGSpeciesID_postprocessing.sh $coverage_minimum $forward_primer $reverse_primer
 
 ## run blast on everything. ideally parallelize this step or run batches in separate slurm submissions. by far the longest step in the process. e.g.
 
@@ -332,19 +340,19 @@ while read line; do
 	blast_files+=($line)
 done<blast.files
 
-parallel -j 8 ./blast.sh {} ::: ${blast_files[@]}
+parallel -j 8 blast.sh {} ::: ${blast_files[@]}
 
 ## get taxa for blast output and reformat
 
 for folder in seqs/*; do
         for blastout in $folder/*.blast.out; do
-                ./blast_out_to_taxa.sh $blastout
+                blast_out_to_taxa.sh $blastout
         done
 done
 
 ## summarise blast results
 
-./summarize_blast.sh
+summarize_blast.sh
 
 ## move seqs/ and summary/ folders to computer for analysis
 
