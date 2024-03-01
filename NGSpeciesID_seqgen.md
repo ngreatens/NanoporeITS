@@ -117,4 +117,195 @@ tree 10028
 ## summarize data
 
 
+! Note make sure all needed software is available.
+
+Next, I've put togther a script that will 
+1. map and trim primers
+2. calculate coverage
+3. move sequences to bins based on coverage and success of primer mapping
+4. summarize data and output several files: a summary.txt, coverage.csv, and lists of seqs that passed and samples or seqs that failed
+
+The script is quite long, so I haven't copied it here, but it is available with all scripts in the scripts folder in this repository.
+
+This script uses minimap2, samtools, and seqkit.
+
+Minimap2 and samtools are supported by umn. [seqkit](https://github.com/shenwei356/seqkit) must be downloaded separately
+
+e.g. 
+
+```
+module load miniconda
+conda create -n seqkit
+conda activate seqkit
+conda install -c bioconda seqkit
+```
+
+Either in the script or in the shell (if running in the shell), you will have to activate the seqkit conda environment
+e.g.
+
+```
+eval "$(conda shell.bash hook)" #intialize shell for conda environments
+conda activate ~/.conda/envs/seqkit
+```
+
+This should run quite fast, so you can just run it in the shell after allocating yourself a node with salloc
+
+you may have to configure this on your own depending on where your conda envs are stored or if you would like to share environmments between members of the project
+
+## blast the seqs
+
+I've written a short script to blastn the seqs and output the top 10 results in a tsv.
+
+```
+#!/bin/bash
+
+query=$1
+outname=${query}.blast.out
+
+ml blast+
+
+blastn \
+		-db nt \
+		-remote \
+		-query $query \
+		-out $outname \
+		-max_target_seqs 10 \
+		-outfmt "6  qseqid sseqid sgi staxids pident length mismatch gapopen qstart qend sstart send evalue bitscore"
+```
+
+Usage :
+        ./blast.sh path/to/folder/example.fasta
+
+
+This can be done most easily through first getting the commands
+
+```
+for folder in seqs/*; do
+        for file in $folder/*.fasta;do
+                echo  "./blast.sh $file";
+        done;
+done > blast.commands
+```
+
+and copypasting into one or more slurm submission scripts and submitting (ideally), or just running for a while on the shell
+
+e.g.
+```
+while read line; do
+        cat $line
+done < blast.commands &
+```
+
+Note: if the module is named differently, you may have to adjust the script accordingly
+
+## get taxids
+
+Unfortunately for some reason blast will not output the scientific name into its tsv format and you have to manually look up the taxids  with a second database
+
+An easy solution is to use [taxonkit](https://github.com/shenwei356/taxonkit), but it must be downloaded from github through conda, as above.
+
+```
+module load miniconda
+conda create -n taxonkit
+conda activate taxonkit
+conda install -c bioconda taxonkit
+```
+
+You must also download the NCBI taxdump database, as explained in the github.
+
+```
+wget -c ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz 
+tar -zxvf taxdump.tar.gz
+
+mkdir -p ~/.taxonkit
+cp names.dmp nodes.dmp delnodes.dmp merged.dmp ~/.taxonkit
+```
+
+note you must edit the shell script to supply it with th proper path the taxdump database.
+Another script, blast_out_to_taxa.sh, will call taxonkit, and output a simplified file with top hits for each blast out file from the previous step.
+
+```
+#!/bin/bash
+
+blastout=$1
+outfile=${blastout%.out}.tophits
+taxdump_dir=/project/fdwsru_fungal/Nick/databases/taxdump
+
+eval "$(conda shell.bash hook)" #intialize shell for conda environments
+conda activate taxonkit
+
+while read line; do 
+        taxid=$(echo $line | awk '{print $4}')
+	taxon=`echo $taxid | taxonkit lineage --data-dir=$taxdump_dir -L -n | awk '{for (i=2; i<NF; i++) printf $i " "; print $NF}'`
+	seqhit=$(echo $line | awk '{print $2}' |cut -f 4 -d "|")
+	match=$(echo $line | awk '{print $5}')
+	echo "${taxon},${seqhit},${match}"
+done < ${blastout} > $outfile
+
+conda deactivate
+
+```
+
+Usage:
+```
+./blast_out_to_taxa.sh path/to/example.fasta.blast.out
+```
+
+call with for loop:
+
+```
+#salloc  #if needed
+for folder in seqs/*; do
+        for blastout in $folder/*.blast.out; do
+                ./blast_out_to_taxa.sh $blastout
+        done
+done &
+```
+
+
+This will run for a while. 
+
+
+## Generate summary file
+
+after the previous step runs, you can summarize the results in a csv
+
+```
+for folder in seqs/*; do
+	for file in $folder/*.tophits; do
+		echo $file
+	done
+done | grep -v "*" > tophits.files
+
+
+echo "sample,seq_name,seqbin,top_hit_species,top_hit_accession,top_hit_match" > sample_blast_summary.txt
+while read line; do
+	sample=$(basename $line | cut -f 1 -d "_")
+	seqname=$(basename $line .blast.tophits)
+	seqbin=$(echo $line |cut -f 2 -d "/")
+	top_hit_species=$(head -1 $line | cut -f 1 -d ",")
+	top_hit_accession=$(head -1 $line | cut -f 2 -d ",")
+	top_hit_match=$(head -1 $line | cut -f 3 -d ",")
+	echo "${sample},${seqname},${seqbin},${top_hit_species},${top_hit_accession},${top_hit_match}"
+done <tophits.files >> sample_blast_summary.txt
+rm tophits.files
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
