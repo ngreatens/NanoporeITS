@@ -303,6 +303,8 @@ rm tophits.files
 
 In short, all scripts will be run in the same directory. Copy all scripts from the scripts folder in this repository to the directory where you will run everything (or adjust paths to the scripts as needed).
 
+Once you get everything working, you should be able to chain everything together and just have it run overnight with something similar to below
+
 
 For example
 
@@ -313,7 +315,7 @@ For example
 ## run post processing script to trim primers, summarize data, and move everything to bins
 ./NGSpeciesID_postprocessing.sh 20 TGAACCTGCAGAAGGATCATTA GCCTTAGATGGAATTTACCACCC
 
-## run blast on everything
+## run blast on everything. ideally parallelize this step or run batches in separate slurm submissions. by far the longest step in the process
 
 for folder in seqs/*; do
         for file in $folder/*.fasta;do
@@ -321,11 +323,12 @@ for folder in seqs/*; do
         done;
 done > blast.commands
 
-### and copy commands a slurm submission script. This will take a long time. Run overnight or if you're impatient, run a submission for each query
+while read line; do
+        cat $line
+done < blast.commands
 
 ## get taxa for blast output and reformat
 
-salloc
 for folder in seqs/*; do
         for blastout in $folder/*.blast.out; do
                 ./blast_out_to_taxa.sh $blastout
@@ -336,8 +339,9 @@ done
 
 ./summarize_blast.sh
 
-
 ## move seqs/ and summary/ folders to computer for analysis
+
+```
 
 
 
