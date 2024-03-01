@@ -1,0 +1,31 @@
+Seqs failed due to low coverage of consensus sequence:
+
+
+
+Seqs failed due to failed primer mapping:
+
+
+
+Seqs failed due to no consensus sequence:
+22SPA0061
+22SPA0062
+22SPA0063
+22SPA0064
+22SPA0065
+22SPA0066
+22SPA0067
+22SPA0068
+22SPA0069
+22SPA0070
+22SPA0076
+22SPA0087
+22SPA0088
+22SPA0089
+22SPA0090
+22SPA0091
+22SPA0092
+22SPA0093
+22SPA0094
+22SPA0095
+22SPA0096
+scripts

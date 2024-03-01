@@ -25,4 +25,4 @@ for folder in seqs/*; do
                 echo  "../../blast.sh $file";
         done;
 done > blast.commands
-
+mv blast.commands summary/
