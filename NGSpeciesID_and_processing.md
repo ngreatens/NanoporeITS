@@ -309,23 +309,30 @@ Once you get everything working, you should be able to chain everything together
 For example
 
 ```
+#!/bin/bash
+
+module load parallel
+
 ## run NGSpeciesID
 ./NGSpeciesID.sh
 
 ## run post processing script to trim primers, summarize data, and move everything to bins
 ./NGSpeciesID_postprocessing.sh 20 TGAACCTGCAGAAGGATCATTA GCCTTAGATGGAATTTACCACCC
 
-## run blast on everything. ideally parallelize this step or run batches in separate slurm submissions. by far the longest step in the process
+## run blast on everything. ideally parallelize this step or run batches in separate slurm submissions. by far the longest step in the process. e.g.
 
 for folder in seqs/*; do
         for file in $folder/*.fasta;do
-                echo  "./blast.sh $file";
+                echo $file
         done;
-done > blast.commands
+done | grep -v '*' > blast.files
 
-while read line; do
-        cat $line
-done < blast.commands
+declare -a blast_files=()
+while read line; do 
+	blast_files+=($line)
+done<blast.files
+
+parallel -j8 ./blast.sh {} ::: ${blast_files[@]}
 
 ## get taxa for blast output and reformat
 
