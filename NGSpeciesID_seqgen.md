@@ -117,7 +117,8 @@ tree 10028
 ## summarize data
 
 
-[!IMPORTANT] make sure all needed software is available.
+> [!IMPORTANT]
+> make sure all needed software is available.
 
 Next, I've put togther a script that will 
 1. map and trim primers
