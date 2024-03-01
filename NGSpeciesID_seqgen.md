@@ -114,11 +114,9 @@ tree 10028
 └── sorted.fastq
 ```
 
-## summarize data
+## summarize data: NGSpeciesID_postprocessing.sh
 
 
-> [!IMPORTANT]
-> make sure all needed software is available.
 
 Next, I've put togther a script that will 
 1. map and trim primers
@@ -127,6 +125,10 @@ Next, I've put togther a script that will
 4. summarize data and output several files: a summary.txt, coverage.csv, and lists of seqs that passed and samples or seqs that failed
 
 The script is quite long, so I haven't copied it here, but it is available with all scripts in the scripts folder in this repository.
+
+
+> [!IMPORTANT]
+> make sure all needed software is available.
 
 This script uses minimap2, samtools, and seqkit.
 
@@ -149,13 +151,18 @@ eval "$(conda shell.bash hook)" #intialize shell for conda environments
 conda activate ~/.conda/envs/seqkit
 ```
 
+Usage (in directory where NGSpeciedID was run)
+./NGSpeciesID_postprocessing.sh <coverage> <forwardprimer> <reverseprimer>
+
+
+
 This should run quite fast, so you can just run it in the shell after allocating yourself a node with salloc
 
 you may have to configure this on your own depending on where your conda envs are stored or if you would like to share environmments between members of the project
 
 ## blast the seqs
 
-I've written a short script to blastn the seqs and output the top 10 results in a tsv.
+Short script to blastn the seqs and output the top 10 results in a tsv.
 
 ```
 #!/bin/bash
