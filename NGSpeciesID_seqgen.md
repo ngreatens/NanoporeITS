@@ -25,7 +25,7 @@ shell script  I used:
 (You may have to provide your own path to the conda env or initialize the shell in a slightly different way)
 
 ```
-#!/bin/bash
+# !/bin/bash
 
 
 reads=$1
