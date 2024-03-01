@@ -114,7 +114,7 @@ tree 10028
 └── sorted.fastq
 ```
 
-## summarize data: NGSpeciesID_postprocessing.sh
+## summarize data
 
 
 
@@ -298,6 +298,54 @@ while read line; do
 done <tophits.files >> sample_blast_summary.txt
 rm tophits.files
 ```
+
+# Summary
+
+In short, all scripts will be run in the same directory. Copy all scripts from the scripts folder in this repository to the directory where you will run everything (or adjust paths to the scripts as needed).
+
+
+For example
+
+```
+## run NGSpeciesID
+./NGSpeciesID.sh
+
+## run post processing script to trim primers, summarize data, and move everything to bins
+./NGSpeciesID_postprocessing.sh 20 TGAACCTGCAGAAGGATCATTA GCCTTAGATGGAATTTACCACCC
+
+## run blast on everything
+
+for folder in seqs/*; do
+        for file in $folder/*.fasta;do
+                echo  "./blast.sh $file";
+        done;
+done > blast.commands
+
+### and copy commands a slurm submission script. This will take a long time. Run overnight or if you're impatient, run a submission for each query
+
+## get taxa for blast output and reformat
+
+salloc
+for folder in seqs/*; do
+        for blastout in $folder/*.blast.out; do
+                ./blast_out_to_taxa.sh $blastout
+        done
+done
+
+## summarise blast results
+
+./summarize_blast.sh
+
+
+## move seqs/ and summary/ folders to computer for analysis
+
+
+
+
+
+
+
+
 
 
 
