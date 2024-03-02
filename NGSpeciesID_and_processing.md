@@ -129,6 +129,14 @@ The script is quite long, so I haven't copied it here, but it is available with 
 
 > [!IMPORTANT]
 > make sure all needed software is available.
+> make sure there are no underscores in sample names. e.g sample_10028 and 10028_A are not valid. rename to 10028 and 10028-A
+
+e.g.
+```
+for  folder in */; do mv $folder $(echo $folder | sed 's/_/-/g'); done
+#or
+for  folder in */; do mv $folder $(echo $folder | cut -f 2 -d "_"); done  #if only one underscore is present in name
+```
 
 This script uses minimap2, samtools, and seqkit.
 
