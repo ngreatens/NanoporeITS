@@ -7,7 +7,7 @@ for folder in seqs/*; do
 done | grep -v "*" > tophits.files
 
 
-echo "sample,seq_name,seqbin,top_hit_species,top_hit_accession,top_hit_match" > sample_blast_summary.txt
+echo "sample,seq_name,seqbin,top_hit_species,top_hit_accession,top_hit_match" > summary/sample_blast_summary.csv 
 while read line; do
 	sample=$(basename $line | cut -f 1 -d "_")
 	seqname=$(basename $line .blast.tophits)

@@ -138,27 +138,33 @@ done
 ####Calculate cov for passed seqs
 #################################
 
-echo "sequence,coverage">coverage.csv
-for consensus in seqs/passed/*consensus_trimmed.fasta; do
-	sample=$(echo $(basename $consensus) | cut -f 1 -d "_")
-	num=$(echo $(basename $consensus) | cut -f 3 -d "_")
-	reads=${sample}/reads_to_consensus_${num}.fastq
-	minimap2 -a $consensus $reads | samtools view -b | samtools sort | samtools coverage - | tail -1 | awk '{print $7}' > cov_tmp
-	cov=$(cat cov_tmp | awk '{print int($1+0.5)}') `#round to nearest whole number`
-	echo "$(basename $consensus),${cov}">>coverage.csv
-done
-rm cov_tmp
-
-for folder in seqs/*; do 
-	for consensus in $folder/*.fasta; do
-        	sample=$(echo $(basename $consensus) | cut -f 1 -d "_")
-        	num=$(echo $(basename $consensus) | cut -f 3 -d "_")
-        	reads=${sample}/reads_to_consensus_${num}.fastq
-        	minimap2 -a $consensus $reads | samtools view -b | samtools sort | samtools coverage - | tail -1 | awk '{print $7}' > cov_tmp
-        	cov=$(cat cov_tmp | awk '{print int($1+0.5)}') `#round to nearest whole number`
-        	echo "$(basename $consensus),${cov}">>coverage.csv
+#for folder in seqs/*; do 
+#	for consensus in $folder/*.fasta; do
+#        	sample=$(echo $(basename $consensus) | cut -f 1 -d "_")
+#        	num=$(echo $(basename $consensus) | cut -f 3 -d "_")
+#        	reads=${sample}/reads_to_consensus_${num}.fastq
+#        	minimap2 -a $consensus $reads | samtools view -b | samtools sort | samtools coverage - | tail -1 | awk '{print $7}' > cov_tmp
+#        	cov=$(cat cov_tmp | awk '{print int($1+0.5)}') `#round to nearest whole number`
+#        	echo "$(basename $consensus),${cov}"
+#	done
+#done
+#rm cov_tmp
+#
+for folder in seqs/*; do
+        for consensus in $folder/*.fasta; do
+		echo $consensus
 	done
-done
+done |grep -v "*" > seqlist
+
+while read line; do
+                sample=$(echo $(basename $line) | cut -f 1 -d "_")
+                num=$(echo $(basename $line) | cut -f 3 -d "_")
+                reads=${sample}/reads_to_consensus_${num}.fastq
+                minimap2 -a $line $reads | samtools view -b | samtools sort | samtools coverage - | tail -1 | awk '{print $7}' > cov_tmp
+                cov=$(cat cov_tmp | awk '{print int($1+0.5)}') `#round to nearest whole number`
+                echo "$(basename $line),${cov}"
+done < seqlist >coverage.csv
+rm seqlist
 rm cov_tmp
 
 ########################

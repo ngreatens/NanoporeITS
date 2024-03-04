@@ -40,7 +40,7 @@ while read line; do
 	blast_files+=($line)
 done<blast.files
 
-parallel -j 8 blast.sh {} ::: ${blast_files[@]}
+parallel -j 16 blast.sh {} ::: ${blast_files[@]}
 
 ## get taxa for blast output and reformat
 
