@@ -17,12 +17,12 @@ forward_primer=$2
 reverse_primer=$3
 
 ######CHANGE PATH#########
-export PATH=$PATH:path/to/NanoporeITS/scripts
+export PATH=$PATH:/home/nicholas.greatens/nanopore/NanoporeITS/scripts
 
 module load parallel
 
 ## run NGSpeciesID
-NGSpeciesID.sh
+#NGSpeciesID.sh
 
 ## run post processing script to trim primers, summarize data, and move everything to bins
 NGSpeciesID_postprocessing.sh $coverage_minimum $forward_primer $reverse_primer
@@ -53,6 +53,11 @@ done
 ## summarise blast results
 
 summarize_blast.sh
+
+## merge coverage and blast resul summary
+
+merge_cov_blastout.sh
+
 
 ## move seqs/ and summary/ folders to computer for analysis
 

@@ -149,6 +149,18 @@ for consensus in seqs/passed/*consensus_trimmed.fasta; do
 done
 rm cov_tmp
 
+for folder in seqs/*; do 
+	for consensus in $folder/*.fasta; do
+        	sample=$(echo $(basename $consensus) | cut -f 1 -d "_")
+        	num=$(echo $(basename $consensus) | cut -f 3 -d "_")
+        	reads=${sample}/reads_to_consensus_${num}.fastq
+        	minimap2 -a $consensus $reads | samtools view -b | samtools sort | samtools coverage - | tail -1 | awk '{print $7}' > cov_tmp
+        	cov=$(cat cov_tmp | awk '{print int($1+0.5)}') `#round to nearest whole number`
+        	echo "$(basename $consensus),${cov}">>coverage.csv
+	done
+done
+rm cov_tmp
+
 ########################
 ##separate seqs with low cov
 ##########################

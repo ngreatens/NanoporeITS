@@ -15,5 +15,6 @@ while read line; do
 	echo "${taxon},${seqhit},${match}"
 done < ${blastout} > $outfile
 
+
 conda deactivate
 
