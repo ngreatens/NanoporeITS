@@ -213,6 +213,9 @@ done < blast.commands &
 ```
 
 Note: if the module is named differently, you may have to adjust the script accordingly
+You will eventually have to download your own blast nucleotide library:  https://www.ncbi.nlm.nih.gov/books/NBK569850/
+NCBI will eventually punish your IP for repeated queries, so you have to run it locally. 
+I have a blast script for local blast searches commented out in the blast.sh script. You will ahve to modify the database
 
 ## get taxids
 
