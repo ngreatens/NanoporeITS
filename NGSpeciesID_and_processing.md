@@ -391,6 +391,9 @@ summarize_blast.sh
 
 merge_cov_blastout.sh
 
+## run rename_seqs to replace fasta header with data from csv file with top blast hit 
+
+rename_seqs.sh
 
 ## move seqs/ and summary/ folders to computer for analysis
 
