@@ -339,19 +339,20 @@ For example
 
 ```
 #!/bin/bash
-
-
 coverage_minimum=$1
 forward_primer=$2
 reverse_primer=$3
 
 ######CHANGE PATH#########
-export PATH=$PATH:path/to/NanoporeITS/scripts
+export PATH=$PATH:/home/nicholas.greatens/nanopore/NanoporeITS/scripts
 
 module load parallel
 
 ## run NGSpeciesID
-NGSpeciesID.sh
+
+declare -a samples=() 
+for file in *.fastq; do samples+=($file); done
+parallel -j 16 NGSpeciesID.sh {} ::: "${samples[@]}"
 
 ## run post processing script to trim primers, summarize data, and move everything to bins
 NGSpeciesID_postprocessing.sh $coverage_minimum $forward_primer $reverse_primer
@@ -369,7 +370,7 @@ while read line; do
 	blast_files+=($line)
 done<blast.files
 
-parallel -j 8 blast.sh {} ::: ${blast_files[@]}
+parallel -j 16 blast.sh {} ::: ${blast_files[@]}
 
 ## get taxa for blast output and reformat
 
@@ -383,11 +384,13 @@ done
 
 summarize_blast.sh
 
-## merge coverage and blast result files
+## merge coverage and blast resul summary
 
 merge_cov_blastout.sh
 
+
 ## move seqs/ and summary/ folders to computer for analysis
+
 
 ```
 
