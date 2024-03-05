@@ -160,7 +160,7 @@ conda activate ~/.conda/envs/seqkit
 ```
 
 Usage (in directory where NGSpeciedID was run)
-./NGSpeciesID_postprocessing.sh <coverage> <forwardprimer> <reverseprimer>
+./NGSpeciesID_postprocessing.sh coverage forwardprimer reverseprimer
 
 
 
