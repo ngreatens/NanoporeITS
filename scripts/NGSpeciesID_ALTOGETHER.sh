@@ -22,7 +22,10 @@ export PATH=$PATH:/home/nicholas.greatens/nanopore/NanoporeITS/scripts
 module load parallel
 
 ## run NGSpeciesID
-#NGSpeciesID.sh
+
+declare -a samples=() 
+for file in *.fastq; do samples+=($file); done
+parallel -j 16 NGSpeciesID.sh {} ::: "${samples[@]}"
 
 ## run post processing script to trim primers, summarize data, and move everything to bins
 NGSpeciesID_postprocessing.sh $coverage_minimum $forward_primer $reverse_primer
