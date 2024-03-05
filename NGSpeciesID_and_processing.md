@@ -334,6 +334,8 @@ cd ..
 
 run rename seqs to replace the fasta header with the name_of_the_seq,bin,top_blast_hit,%match,cov
 
+BLAST HITS are PRELIMINARY IDS, just a sneek peek at what you might have. To confirm, look at % match, other top blast hits, available in seqs/ dirs,  phylogenetics, etc.
+
 
 ```
 #!/bin/bash
