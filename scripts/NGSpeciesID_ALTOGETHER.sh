@@ -21,7 +21,7 @@ export PATH=$PATH:/home/nicholas.greatens/nanopore/NanoporeITS/scripts
 
 module load parallel
 
-## run NGSpeciesID
+# run NGSpeciesID
 
 declare -a samples=() 
 for file in *.fastq; do samples+=($file); done
@@ -45,13 +45,23 @@ done<blast.files
 
 parallel -j 16 blast.sh {} ::: ${blast_files[@]}
 
-## get taxa for blast output and reformat
+# get taxa for blast output and reformat
 
 for folder in seqs/*; do
         for blastout in $folder/*.blast.out; do
                 blast_out_to_taxa.sh $blastout
         done
 done
+
+declare -a blastouts=()
+for folder in seqs/*; do
+        for blastout in $folder/*.blast.out; do
+		blastouts+=($blastout)
+        done
+done
+
+parallel -j 16 blast_out_to_taxa.sh {} ::: "${blastouts[@]}"
+
 
 ## summarise blast results
 
