@@ -1,6 +1,7 @@
 #!/bin/bash
 
 reads=$1
+quality=$2
 outfolder=${reads%.*}
 
 
@@ -10,6 +11,7 @@ conda activate ~/.conda/envs/NGSpeciesID
 NGSpeciesID \
 	--ont \
 	--consensus \
+	--q $quality \
 	--racon \
 	--racon_iter 3 \
 	--m 750 \

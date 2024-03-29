@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#database=/project/fdwsru_fungal/Nick/databases/nt/nt
+database=/project/fdwsru_fungal/Nick/databases/nt/nt
 query=$1
 outname=${query}.blast.out
 
@@ -8,8 +8,7 @@ outname=${query}.blast.out
 ml blast+
 
 blastn \
-		-db nt \
-		-remote \
+		-db $database \
 		-query $query \
 		-out $outname \
 		-max_target_seqs 10 \
