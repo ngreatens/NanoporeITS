@@ -52,7 +52,7 @@ conda deactivate
 Example usage (with above shell script in folder with fastqs):
 
 ```
-./NGSpeciesID.sh sample_10062.fastq <quality>
+./NGSpeciesID.sh sample_10062.fastq 10
 ```
 
 To get commands for all fastqs:
