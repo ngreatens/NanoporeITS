@@ -29,6 +29,7 @@ shell script  I used:
 
 
 reads=$1
+quality=$2
 outfolder=${reads%.*}
 
 eval "$(conda shell.bash hook)" #intialize shell for conda environments
@@ -37,6 +38,7 @@ conda activate ~/.conda/envs/NGSpeciesID
 NGSpeciesID \
         --ont \
         --consensus \
+        --q $quality \
         --racon \
         --racon_iter 3 \
         --m 750 `#target length`\
@@ -50,7 +52,7 @@ conda deactivate
 Example usage (with above shell script in folder with fastqs):
 
 ```
-./NGSpeciesID.sh sample_10062.fastq
+./NGSpeciesID.sh sample_10062.fastq <quality>
 ```
 
 To get commands for all fastqs:
