@@ -20,7 +20,7 @@ while read line; do grep $line nucl_gb.accession2taxid | awk '{print $2" "$3}'; 
 
 
 In additiion, I included some sequences for some common contaminants, at least in the last runs that I did--mostly basidiomycete yeasts:
-
+```
 Filobasidium stepposum                     | MN128835.1
 Aspergillus cibarius                       | OL711856.1
 Filobasidium magnum                        | JX188126.1
@@ -29,6 +29,7 @@ Symmetrospora coprosmae                    | AM160645.1
 Naganishia globosa                         | JX188127.1
 Erythrobasidium hasegawianum               | FN824494.1
 Cryptococcus sp. HB 1222                   | AM160648.1
+```
 
 * And similarly downloaded and formatted files. concatenated contaminant files with crown rust library files.
 
