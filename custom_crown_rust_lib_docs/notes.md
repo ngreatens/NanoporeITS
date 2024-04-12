@@ -33,14 +33,14 @@ Cryptococcus sp. HB 1222                   | AM160648.1
 * And similarly downloaded and formatted files. concatenated contaminant files with crown rust library files.
 
 crown rust library files:
-	library.fasta
-	taxids.txt
-	seqlist.txt
+* library.fasta
+* taxids.txt
+* seqlist.txt
 
 crown rust with contaminants library files (recommended):
-	crownrust_wcontaminants_library.fasta
-	crownrust_wcontaminants_taxids.txt
-	crownrust_wcontaminants_seqlist.txt
+* crownrust_wcontaminants_library.fasta
+* crownrust_wcontaminants_taxids.txt
+* crownrust_wcontaminants_seqlist.txt
 
 
 module load blast+ ###### use module name used by MSI
