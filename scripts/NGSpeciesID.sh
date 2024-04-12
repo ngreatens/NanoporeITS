@@ -1,5 +1,7 @@
 #!/bin/bash
 
+ml miniconda
+
 reads=$1
 quality=$2
 outfolder=${reads%.*}
@@ -14,9 +16,10 @@ NGSpeciesID \
 	--q $quality \
 	--racon \
 	--racon_iter 3 \
-	--m 750 \
-	--s 250 \
+	--m 660 \
+	--s 150 \
 	--fastq $reads \
 	--outfolder $outfolder
 
 conda deactivate
+
