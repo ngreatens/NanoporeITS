@@ -13,6 +13,7 @@ Kenaley, S. C., Ecker, G., & Bergstrom, G. C. (2017). First Report of Puccinia c
 Liu, M., & Hambleton, S. (2013). Laying the foundation for a taxonomic review of Puccinia coronata s.l. In a phylogenetic context. Mycological Progress, 12(1), 63–89. https://doi.org/10.1007/s11557-012-0814-1
 ```
 * There are some additional fungi in here--e.g. P. graminis, etc. that were used as outroups in Liu and Hambleton 2013. This won't affect results.
+*  a few remaining seqs in the library labelled as Puccinia coronata, but you are unlikely to get these as hits. They are all in unresolved taxa that are not present in the U.S. to my knowledge. Most hits of crown rust fungi should be labelled to subspecies, variety, etc. within P. Series Coronata
   
 
 * download fastas from NCBI using list; save as Custom_Crown_rust_library.fasta
