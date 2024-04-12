@@ -44,9 +44,35 @@ crown rust with contaminants library files (recommended):
 * crownrust_wcontaminants_seqlist.txt
 
 
-module load blast+ ###### use module name used by MSI
+### Example usage to make db
+
+```
+#### after downloading files in this folder to your dir ###
+module load blast-plus ###### use module name used by MSI
 
 makeblastdb -in crownrust_wcontaminants_library.fasta -parse_seqids -taxid_map crownrust_wcontaminants_taxids.txt -dbtype nucl -title crownrust_wcontaminants_library.fasta
+```
+* then you will have to change the name of the directory in blast.sh.
+* you will direct it to the fasta file, after making the db
+* e.g. database="/path/to/dir/crownrust_wcontaminants_library.fasta"
 
+### run blast
+
+* after the blast.sh script is changed, use command as normal
+
+```
+./blast.sh example.fasta
+```
+
+### run CUSTOMLIB_blast_out_to_taxa.sh
+
+in place of "blast_out_to_taxa.sh", you will run CUSTOMLIB_blast_out_to_taxa.sh on blast.out files. For some reason some information is lost with custom searches, and the place of the match is different in the output. This will work, but only with the custom libary.
+
+```
+./CUSTOMLIB_blast_out_to_taxa.sh example.blast.out
+```
+### Continue
+
+* Everything else should work as normal
 
 	
