@@ -288,7 +288,7 @@ This will run for a while.
 
 ## Sort by percent match
 
-Blast automatically sorts by some point system they have, but percent match is usually more informative. To sort top hits files by % match, use (csvkit)[https://csvkit.readthedocs.io/en/latest/tutorial/1_getting_started.html#installing-csvkit]
+Blast automatically sorts by some point system they have, but percent match is usually more informative. To sort top hits files by % match, use [csvkit](https://csvkit.readthedocs.io/en/latest/tutorial/1_getting_started.html#installing-csvkit)
 
 
 
