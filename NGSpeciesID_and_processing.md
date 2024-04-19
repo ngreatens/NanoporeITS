@@ -286,6 +286,24 @@ done &
 
 This will run for a while. 
 
+## Sort by percent match
+
+Blast automatically sorts by some point system they have, but percent match is usually more informative. To sort top hits files by % match, use (csvkit)[https://csvkit.readthedocs.io/en/latest/tutorial/1_getting_started.html#installing-csvkit]
+
+
+
+Install through 
+
+e.g. 
+```
+for folder in seqs/*; do 
+    for file in $folder/*.tophits; do 
+        cat $file | csvsort -c 3 -d , -r -H > ${file}_sorted
+        mv ${file}_sorted $file
+    done
+done
+```
+
 
 ## Generate summary file
 
