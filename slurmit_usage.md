@@ -77,7 +77,7 @@ slurmit spades.cmds 24 32
 
 change ntasks by
 ```
-sed -i 's/ntasks 16/ntasks 40/1' $file
+sed -i 's/ntasks 16/ntasks 40/1' example.sub
 ```
 
 write loop if needed
