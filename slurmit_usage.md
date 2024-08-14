@@ -8,7 +8,7 @@ echo "alias slurmit='~/scripts/makeslurms.py'" >> ~/.bashrc
 source ~/.bashrc
 ```
 
-put all commands in shell script with command line inputs
+put all commands in shell script with command line inputs. 
 
 e.g. a script spades-paired.sh
 
@@ -30,6 +30,7 @@ spades.py \
     -t $threads \
     -o $outname
 ```
+Makes it easy to keep track of what scripts you use, and they're easily reusable of course.
 
 then 
 ```
