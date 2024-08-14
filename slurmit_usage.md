@@ -33,7 +33,7 @@ spades.py \
 
 then 
 ```
-echo ./spades-paired.sh Col_R1.fastq col_R2.fastq Col > spades.cmds
+echo ./spades-paired.sh Col_R1.fastq Col_R2.fastq Col > spades.cmds
 slurmit spades.cmds 24 32
 ```
 should output a slurm script
@@ -54,4 +54,21 @@ ulimit -s unlimited
 ./spades-paired.sh Col_R1.fastq Col_R2.fastq Col
 scontrol show job $SLURM_JOB_ID
 ```
-  
+
+Can easily make as many slurm scripts as you need with various inputs if you write for loops
+
+i.e 
+```
+for file in *R1.fastq; do 
+    echo ./spades-paired.sh $file $(sed 's/R1/R2/1' $file) $(basename $file .R1.fastq)
+done > spades.cmds
+
+slurmit spades.cmds 24 32
+```
+
+change ntasks by
+```
+sed -i 's/ntasks 16/ntasks 40/1' *.sub
+```
+
+write loop if needed
