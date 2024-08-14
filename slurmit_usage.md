@@ -54,8 +54,16 @@ ulimit -s unlimited
 ./spades-paired.sh Col_R1.fastq Col_R2.fastq Col
 scontrol show job $SLURM_JOB_ID
 ```
+Then submit all output files
+```
+for file in *.sub; do sbatch $file; done
+```
+can easily add this to bashrc too
+```
+echo "alias sub='for sub in *.sub; do sbatch $sub; done'" >> ~/.bashrc
+```
 
-Can easily make as many slurm scripts as you need with various inputs if you write for loops
+make as many slurm scripts as you need with various inputs if you write for loops
 
 i.e 
 ```
