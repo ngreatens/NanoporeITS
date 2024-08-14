@@ -25,8 +25,8 @@ module load \
     python_3/3.11.1
 
 spades.py \
-    -1 $1 \
-    -2 $2 \
+    -1 $forward_reads \
+    -2 $reverse_reads \
     -t $threads \
     -o $outname
 ```
