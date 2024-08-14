@@ -16,16 +16,10 @@ import sys
 import os
 
 def determine_partition(hours):
-        if hours<=48:
-                return 'short'
-        elif hours<=168:
-                return 'medium'
-        elif hours<=504:
-                return 'long'
-        elif hours<=1440:
-                return 'long60'
+        if hours<=96:
+                return 'msismall'
         else:
-                raise Exception("Job must be shorter than 60 days")
+                raise Exception("Job must be shorter than 4 days")
 
 if len(sys.argv)<2:
     print(Usage)
